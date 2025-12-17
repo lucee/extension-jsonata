@@ -125,7 +125,7 @@
 		<echo file="${dist}/extension/META-INF/MANIFEST.MF">Manifest-Version: 1.0
 Built-Date: ${NOW}
 version: "${bundleversion}"
-id: "${id}"
+id: "${extensionId}"
 name: "${label}"
 description: "${description}"
 start-bundles: true

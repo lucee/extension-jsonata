@@ -147,7 +147,7 @@
 									<property name="bundleversion" value="${project.version}"/>
 									<property name="bundlename" value="${bundlename}"/>
 									<property name="filename" value="${project.artifactId}"/>
-									<property name="id" value="${id}"/>
+									<property name="extensionId" value="${extensionId}"/>
 									<property name="luceeCoreVersion" value="${luceeCoreVersion}"/>
 									<property name="releaseType" value="${releaseType}"/>
 									<property name="label" value="${label}"/>
