@@ -12,15 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<id>7FA79F92-0018-47F5-8C80E6C608C573BE</id>
-		<bundlename>jsonata.extension</bundlename>
-		<mvnGroupId>org.lucee</mvnGroupId>
-		<mvnGroupPath>org/lucee</mvnGroupPath>
-		<mvnArtifactId>extension-jsonata</mvnArtifactId>
-		<filename>jsonata-extension</filename>
-		<luceeCoreVersion>6.0.0.585</luceeCoreVersion>
-		<releaseType>server</releaseType>
-		<label>JSONata Extension</label>
+		<!-- Extension properties loaded from build.properties via properties-maven-plugin -->
 		<release.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</release.url>
 		<snapshot.url>https://oss.sonatype.org/content/repositories/snapshots/</snapshot.url>
 	</properties>
@@ -118,6 +110,26 @@
 
 	<build>
 		<plugins>
+			<!-- Load properties from build.properties -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/build.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- Antrun plugin to execute the Ant build -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -4,18 +4,14 @@
 		Build JSONata Extension
 	</description>
 
-	<!-- Default properties for local builds (can be overridden via -D or parent pom) -->
-	<property name="bundleversion" value="1.0.0.0-SNAPSHOT"/>
+	<!-- Load properties from build.properties (can be overridden via -D or parent pom) -->
+	<property file="build.properties"/>
+
+	<!-- Computed version from bundleversion + appendix -->
+	<property name="bundleversion" value="${bundleversion}${appendix}"/>
+
+	<!-- Build defaults -->
 	<property name="maven.goal" value="package"/>
-	<property name="mvnGroupId" value="org.lucee"/>
-	<property name="mvnGroupPath" value="org/lucee"/>
-	<property name="mvnArtifactId" value="extension-jsonata"/>
-	<property name="filename" value="jsonata-extension"/>
-	<property name="id" value="7FA79F92-0018-47F5-8C80E6C608C573BE"/>
-	<property name="label" value="JSONata Extension"/>
-	<property name="description" value="JSONata query language for JSON data"/>
-	<property name="releaseType" value="server"/>
-	<property name="luceeCoreVersion" value="5.4.0.80"/>
 	<property name="maven.username" value=""/>
 	<property name="maven.password" value=""/>
 	<property name="gpg.passphrase" value=""/>
