@@ -39,11 +39,11 @@ jobs:
       - name: Extract version number
         id: extract-version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f source/java/pom.xml)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build extension
-        run: ant -buildfile build.xml
+        run: mvn -B -e -f pom.xml clean install -Dgoal=install
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
