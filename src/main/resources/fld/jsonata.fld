@@ -11,7 +11,7 @@
 	<!-- JSONata -->
 	<function>
 		<name>JSONata</name>
-		<class bundle-name="extension-jsonata" bundle-version="{version}">org.lucee.extension.jsonata.JSONata</class>
+		<class bundle-name="extension-jsonata" bundle-version="${project.version}">org.lucee.extension.jsonata.JSONata</class>
 		<description>Query and transform JSON data using JSONata expressions. See https://jsonata.org for expression syntax.</description>
 		<argument>
 			<name>expression</name>
