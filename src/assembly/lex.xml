@@ -7,16 +7,7 @@
 	</formats>
 	<includeBaseDirectory>false</includeBaseDirectory>
 
-	<!-- Include the shaded JAR -->
-	<files>
-		<file>
-			<source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
-			<destName>${project.artifactId}-${project.version}.jar</destName>
-			<outputDirectory>jars</outputDirectory>
-		</file>
-	</files>
-
-	<!-- Include filtered FLD and logo -->
+	<!-- Include filtered FLD -->
 	<fileSets>
 		<fileSet>
 			<directory>${project.build.directory}/extension-resources/flds</directory>
@@ -37,6 +28,15 @@
 			<outputDirectory>META-INF</outputDirectory>
 			<includes>
 				<include>MANIFEST.MF</include>
+			</includes>
+		</fileSet>
+		<!-- Embedded Maven repo (JARs + POMs in repo layout) -->
+		<fileSet>
+			<directory>${project.build.directory}/maven-repo</directory>
+			<outputDirectory>maven</outputDirectory>
+			<includes>
+				<include>**/*.jar</include>
+				<include>**/*.pom</include>
 			</includes>
 		</fileSet>
 	</fileSets>

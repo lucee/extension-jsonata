@@ -1,8 +1,6 @@
 # Build outputs
 *.class
 target/
-build/
-temp/
 
 # IDE
 *.classpath
