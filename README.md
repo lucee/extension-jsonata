@@ -1,27 +1,10 @@
-# JSONata Extension for Lucee
+# Lucee Extension JSONata
 
-Query and transform JSON data using [JSONata](https://jsonata.org) expressions.
+Query and transform JSON data using [JSONata](https://jsonata.org) expressions - like XPath/XQuery but for JSON.
 
-## Installation
+**Requires Lucee 7.0.3+** — uses maven-based classloading (no OSGi).
 
-Download the `.lex` file from releases and install via Lucee Admin, or drop it into your server's `deploy` directory.
-
-## Usage
-
-```cfml
-result = JSONata( expression, data [, bindings [, options]] )
-```
-
-Arguments:
-
-- **expression** - JSONata query/transform expression (required)
-- **data** - CFML struct/array or JSON string (required)
-- **bindings** - Optional struct of variables accessible via `$varName` in the expression
-- **options** - Optional struct with runtime options (timeout, maxDepth, functions)
-
-## Examples
-
-### Basic Queries
+## Basic Queries
 
 ```cfml
 // Simple path
@@ -36,7 +19,7 @@ data = { user: { profile: { city: "Sydney" } } };
 JSONata( "user.profile.city", data )  // "Sydney"
 ```
 
-### Aggregations
+## Aggregations
 
 ```cfml
 data = { values: [ 1, 2, 3, 4, 5 ] };
@@ -48,7 +31,7 @@ JSONata( "$min(values)", data )      // 1
 JSONata( "$max(values)", data )      // 5
 ```
 
-### Filtering
+## Filtering
 
 ```cfml
 data = {
@@ -66,7 +49,7 @@ JSONata( "products[price > 1].name", data )  // ["apple", "cherry"]
 JSONata( "products[price < 1]", data )  // { name: "banana", price: 0.75 }
 ```
 
-### Transformations
+## Transformations
 
 ```cfml
 data = { firstName: "Zac", lastName: "Spitzer" };
@@ -83,7 +66,7 @@ JSONata( "$uppercase(firstName)", data )  // "ZAC"
 JSONata( "$lowercase(lastName)", data )   // "spitzer"
 ```
 
-### Complex Queries
+## Complex Queries
 
 ```cfml
 data = {
@@ -98,7 +81,9 @@ data = {
 JSONata( "$sum(orders.(quantity * price))", data )  // 75
 ```
 
-### Variable Bindings
+## Variable Bindings
+
+Pass variables accessible via `$varName` in expressions.
 
 ```cfml
 // Simple variable
@@ -118,9 +103,9 @@ data = { items: [ 1, 2, 3 ] };
 JSONata( "$config.prefix & $string($sum(items))", data, { config: { prefix: "Total: " } } )  // "Total: 6"
 ```
 
-### Timeout and Safety Options
+## Timeout and Safety Options
 
-Protect against runaway expressions with timeout and recursion depth limits:
+Protect against runaway expressions with timeout and recursion depth limits.
 
 ```cfml
 // With timeout (milliseconds) and max recursion depth
@@ -131,14 +116,14 @@ JSONata( expression, data, {}, { timeout: 5000, maxDepth: 50 } )
 // - maxDepth: "Stack overflow error: Check for non-terminating recursive function..."
 ```
 
-Default values:
+| Option | Default | Description |
+| ------ | ------- | ----------- |
+| `timeout` | 5000ms | Maximum evaluation time |
+| `maxDepth` | 100 | Maximum recursion depth |
 
-- **timeout**: 5000ms (5 seconds)
-- **maxDepth**: 100
+## Custom Functions
 
-### Custom Functions
-
-Register CFML closures as custom JSONata functions:
+Register CFML closures as custom JSONata functions.
 
 ```cfml
 // Single-arg function - use lowercase in expression
@@ -187,28 +172,31 @@ JSONata(
 
 **Note:** Use lowercase function names in expressions (e.g., `$formatprice`) since CFML uppercases struct keys.
 
-## Return Values
+## Function Signature
 
-- Scalar results return as CFML strings, numbers, or booleans
-- Object results return as CFML Structs
-- Array results return as CFML Arrays
-- Missing paths return empty string `""`
-
-## JSONata Reference
-
-Full expression syntax: https://docs.jsonata.org
-
-## Building
-
-```bash
-ant -buildfile build.xml
+```cfml
+result = JSONata( expression, data [, bindings [, options]] )
 ```
 
-Output: `target/jsonata-extension-{version}.lex`
+| Argument | Description |
+| -------- | ----------- |
+| `expression` | JSONata query/transform expression (required) |
+| `data` | CFML struct/array or JSON string (required) |
+| `bindings` | Struct of variables accessible via `$varName` |
+| `options` | Struct: `timeout`, `maxDepth`, `functions` |
 
-## Dependencies
+## Requirements
 
-Uses [dashjoin/jsonata-java](https://github.com/dashjoin/jsonata-java) (embedded, zero external dependencies).
+- Lucee 7.0.3+
+- Java 11 or later
+
+## Technical Details
+
+Uses [dashjoin/jsonata-java](https://github.com/dashjoin/jsonata-java) (zero external dependencies).
+
+Maven-based extension using embedded `/maven/` repo layout with `maven=` attribute in the FLD. No OSGi bundles.
+
+Full expression syntax: https://docs.jsonata.org
 
 ## License
 
